@@ -22,6 +22,13 @@ Construido sobre **Laravel 13** con **Filament 5**.
 | `/lector` | Lectores de campo | Solo su ruta de lectura del período, ordenada por sector, con captura de foto |
 | `/portal` | Vecinos | Consulta de sus boletas y su estado de cuenta |
 
+## DEMO
+
+URL: http://52.23.198.185/admin/login
+USUARIO: aleosorio@muni.com
+CONTRASEÑA: 12345678
+
+
 **Módulos**
 
 - **Padrón** — clientes, predios y contadores, con códigos correlativos automáticos
