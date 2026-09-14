@@ -30,6 +30,8 @@ USUARIO: aleosorio@muni.com
 
 CONTRASEÑA: 12345678
 
+MANUAL DE USUARIO: https://drive.google.com/file/d/142afSqXnQWJNQxOw1HtSIUCHmq-53c9Q/view?usp=drive_link
+
 ---
 
 **Módulos**
