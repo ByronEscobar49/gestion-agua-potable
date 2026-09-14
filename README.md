@@ -25,9 +25,12 @@ Construido sobre **Laravel 13** con **Filament 5**.
 ## DEMO
 
 URL: http://52.23.198.185/admin/login
+
 USUARIO: aleosorio@muni.com
+
 CONTRASEÑA: 12345678
 
+---
 
 **Módulos**
 
