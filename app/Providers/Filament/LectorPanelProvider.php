@@ -59,6 +59,10 @@ class LectorPanelProvider extends PanelProvider
                 PanelsRenderHook::HEAD_END,
                 fn (): string => Blade::render('@include("filament.lector.estilos")'),
             )
+            ->renderHook(
+                PanelsRenderHook::HEAD_END,
+                fn (): string => Blade::render('@include("filament.contador-caracteres")'),
+            )
             ->middleware([
                 // Los paneles no pasan por el grupo `web`, así que el guardián
                 // del instalador se declara acá también: sin esto, un servidor
