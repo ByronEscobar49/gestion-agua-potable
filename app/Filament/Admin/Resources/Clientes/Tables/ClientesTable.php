@@ -3,8 +3,11 @@
 namespace App\Filament\Admin\Resources\Clientes\Tables;
 
 use App\Filament\Admin\Support\AccionesCatalogo;
+use App\Models\Cliente;
+use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Actions\RestoreAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
@@ -106,6 +109,13 @@ class ClientesTable
                     ->label('Eliminados'),
             ])
             ->recordActions([
+                Action::make('imprimirFicha')
+                    ->label('Imprimir ficha')
+                    ->icon(Heroicon::OutlinedPrinter)
+                    ->color('gray')
+                    ->visible(fn (Cliente $record): bool => ! $record->trashed()
+                        && (auth()->user()?->can('view', $record) ?? false))
+                    ->url(fn (Cliente $record): string => route('clientes.ficha-impresion', $record), shouldOpenInNewTab: true),
                 EditAction::make(),
                 AccionesCatalogo::eliminar(),
                 RestoreAction::make(),
