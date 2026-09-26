@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\FichaClienteController;
 use App\Http\Controllers\InstaladorController;
 use App\Http\Controllers\ReciboContadorController;
 use App\Http\Controllers\ReciboPagoController;
@@ -12,6 +13,10 @@ Route::get('/', function () {
 Route::get('/tarifas', function () {
     return view('tarifas');
 });
+
+Route::get('/clientes/{cliente}/ficha-impresion', FichaClienteController::class)
+    ->middleware(['auth'])
+    ->name('clientes.ficha-impresion');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -48,6 +48,33 @@ it('pinta el formulario de edicion', function () {
         ->assertSuccessful();
 });
 
+it('muestra la ficha imprimible con los contadores y el estado de cuenta', function () {
+    $cliente = Cliente::factory()->create([
+        'codigo' => 'CLI-IMP-01',
+        'nombre' => 'Ana López',
+    ]);
+    $contador = Contador::factory()->for($cliente)->create(['codigo' => 'CTR-IMP-01']);
+    Boleta::factory()->for($cliente)->vencida()->create(['monto' => 80]);
+
+    $this->get(route('clientes.ficha-impresion', $cliente))
+        ->assertSuccessful()
+        ->assertSee('Ficha del cliente')
+        ->assertSee('Ana López')
+        ->assertSee('CTR-IMP-01')
+        ->assertSee('Con pagos vencidos')
+        ->assertSee('Q 80.00')
+        ->assertSee('window.print()');
+});
+
+it('no permite imprimir la ficha a quien no tiene permiso para ver clientes', function () {
+    $cliente = Cliente::factory()->create();
+    $usuarioSinPermiso = User::factory()->create();
+
+    $this->actingAs($usuarioSinPermiso)
+        ->get(route('clientes.ficha-impresion', $cliente))
+        ->assertForbidden();
+});
+
 it('da de alta solo a la persona cuando todavia no tiene servicio', function () {
     Livewire::test(ClienteResource::getPages()['create']->getPage())
         ->fillForm([
