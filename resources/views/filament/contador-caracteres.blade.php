@@ -44,11 +44,14 @@
             }
 
             const length = field.value.length;
+            const remaining = Math.max(0, limit - length);
             const atLimit = length >= limit;
             const nearLimit = length >= Math.ceil(limit * threshold);
 
             counter.dataset.state = atLimit ? 'limit' : nearLimit ? 'warning' : 'normal';
-            counter.textContent = `${length}/${limit} caracteres${atLimit ? ' · límite alcanzado' : nearLimit ? ' · cerca del límite' : ''}`;
+            counter.textContent = atLimit
+                ? `Límite alcanzado (${length}/${limit})`
+                : `Te quedan ${remaining} caracteres (${length}/${limit})${nearLimit ? ' · cerca del límite' : ''}`;
             counter.setAttribute('aria-live', nearLimit ? 'polite' : 'off');
         };
 
