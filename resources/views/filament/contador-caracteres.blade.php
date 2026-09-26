@@ -26,14 +26,16 @@
 
         const updateCounter = (field) => {
             const limit = Number.parseInt(field.getAttribute('maxlength'), 10);
-            const wrapper = field.closest('[data-field-wrapper]');
+            const wrapper = field.closest('[data-field-wrapper], .fi-fo-field') || field.parentElement;
 
             if (!Number.isFinite(limit) || limit < 1 || !wrapper) {
                 return;
             }
 
-            const contentColumn = wrapper.querySelector('.fi-fo-field-content-col') || wrapper;
-            let counter = contentColumn.querySelector(':scope > [data-app-character-counter]');
+            const contentColumn = field.closest('.fi-fo-field-content-col')
+                || wrapper.querySelector('.fi-fo-field-content-col')
+                || wrapper;
+            let counter = contentColumn.querySelector('[data-app-character-counter]');
 
             if (!counter) {
                 counter = document.createElement('span');
@@ -49,9 +51,7 @@
             const nearLimit = length >= Math.ceil(limit * threshold);
 
             counter.dataset.state = atLimit ? 'limit' : nearLimit ? 'warning' : 'normal';
-            counter.textContent = atLimit
-                ? `Límite alcanzado (${length}/${limit})`
-                : `Te quedan ${remaining} caracteres (${length}/${limit})${nearLimit ? ' · cerca del límite' : ''}`;
+            counter.textContent = `${remaining} caracteres restantes${atLimit ? ' · límite alcanzado' : nearLimit ? ' · cerca del límite' : ''}`;
             counter.setAttribute('aria-live', nearLimit ? 'polite' : 'off');
         };
 
@@ -87,7 +87,11 @@
                 mutations.forEach((mutation) => {
                     mutation.addedNodes.forEach(scan);
 
-                    if (mutation.type === 'attributes' && mutation.target instanceof Element) {
+                    if (mutation.target instanceof Element && mutation.type === 'attributes') {
+                        scan(mutation.target);
+                    }
+
+                    if (mutation.type === 'childList') {
                         scan(mutation.target);
                     }
                 });
