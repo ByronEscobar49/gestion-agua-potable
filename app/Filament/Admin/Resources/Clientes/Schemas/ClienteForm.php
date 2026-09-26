@@ -48,7 +48,7 @@ class ClienteForm
                     TextInput::make('nombre')
                         ->label('Nombre completo')
                         ->required()
-                        ->maxLength(150)
+                        ->maxLength(50)
                         ->helperText('Como aparece en el documento de identidad.'),
                 ]),
 
@@ -96,7 +96,7 @@ class ClienteForm
 
                     Textarea::make('direccion_notificacion')
                         ->label('Dirección de notificación')
-                        ->maxLength(255)
+                        ->maxLength(100)
                         ->rows(2)
                         ->columnSpanFull()
                         ->helperText('Dónde se le notifica a la persona. La dirección donde llega el agua va en el predio, no aquí.'),
